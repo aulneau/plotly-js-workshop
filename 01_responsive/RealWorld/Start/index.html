@@ -1,0 +1,74 @@
+<html>
+<head>
+    <title>Plotly.js | Responsive Code Explorer</title>
+    <!--Import Plotly-->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
+    <!--Import Our Larger Data Sets-->
+    <script src="../common/plots/javascript.js"></script>
+    <script src="../common/plots/python.js"></script>
+    <script src="../common/plots/r.js"></script>
+    <script src="../common/plots/react.js"></script>
+
+    <!--Highlight.js-->
+    <link rel="stylesheet"
+          href="https://cdn.rawgit.com/dracula/highlightjs/master/dracula.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <!--Our Styles-->
+    <link rel="stylesheet" href="../common/styles.css">
+
+</head>
+<body>
+
+<div class="app">
+    <div class="app__wrapper">
+        <div class="codeExplorer">
+            <div class="codeExplorer__wrapper">
+
+                <!--Code Visual (Plot)-->
+                <div class="codeExplorer__plot__container js-plot-container">
+                    <div id="myPlot" class="codeExplorer__plot"></div>
+                </div>
+
+                <!--Code Language Navigator-->
+                <div class="codeExplorer__content">
+
+                    <!--Code Tabs-->
+                    <div class="codeExplorer__content__tabs">
+                        <div class="codeExplorer__content__tab js-tab-js"
+                             data-language="javascript">
+                            Javascript
+                        </div>
+                        <div class="codeExplorer__content__tab js-tab-r"
+                             data-language="r">
+                            R
+                        </div>
+                        <div class="codeExplorer__content__tab js-tab-python"
+                             data-language="python">
+                            Python
+                        </div>
+                        <div class="codeExplorer__content__tab js-tab-react"
+                             data-language="react">
+                            React
+                        </div>
+                    </div>
+
+                    <!--Code Area-->
+                    <div class="codeExplorer__content__code">
+                        <div class="codeExplorer__content__code__container">
+                            <pre><code class="code js-code-area"></code></pre>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Include our Client Side Code-->
+<script src="./js.js"></script>
+</body>
+</html>
