@@ -19,7 +19,7 @@ const data = [
     marker: {
       color: 'light-blue',
       line: {
-        width: 5
+        width: 0
       }
     }
   }
@@ -63,3 +63,41 @@ Plotly.newPlot(chart, data, layout);
  * Listen for updates to window size
  */
 
+window.onresize = () => {
+
+  let w = window.innerWidth;
+
+  let h = window.innerHeight;
+
+  let layoutUpdate = {
+  }
+  let traceUpdate = {}
+
+  if (w < 500) {
+    layoutUpdate['font.size'] = 12
+
+    traceUpdate['x'] = [['A', 'B', 'G', 'W']]
+
+    Plotly.relayout(chart, layoutUpdate)
+    Plotly.restyle(chart, traceUpdate)
+  }
+
+  if (w > 500) {
+    layoutUpdate['font.size'] = 18
+    traceUpdate['x'] = [
+      ['Apppppppppppp<br />pppplllleee',
+      'banananannnanannnananaa',
+      'grapessssssssssss',
+      'watermellllllllllllon']
+    ]
+
+    Plotly.relayout(chart, layoutUpdate)
+    Plotly.restyle(chart, traceUpdate)
+  }
+
+
+  Plotly.relayout(chart, {
+    width: w,
+    height: h
+  })
+}

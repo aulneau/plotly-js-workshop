@@ -2,7 +2,7 @@
  * Grab our plot
  */
 
-const myPlot = document.getElementById("myPlot");
+const myPlot = document.getElementById('myPlot');
 
 /**
  * Define our function for grabbing element's size
@@ -18,13 +18,13 @@ const getSize = element => {
     x,
     y
   } = element.getBoundingClientRect();
-  return { top, right, bottom, left, width, height, x, y };
+  return {top, right, bottom, left, width, height, x, y};
 };
 
 /**
  * Get the size of our container
  */
-const container = document.querySelector("html");
+const container = document.querySelector('html');
 
 let containerSize = getSize(container);
 
@@ -46,10 +46,10 @@ window.onresize = () => {
 const N = 1000;
 
 const colors = {
-  purple: "#7b3294",
-  purple_light: "#c2a5cf",
-  salmon: "#ffa7b5",
-  orange: "#fdae61"
+  purple: '#7b3294',
+  purple_light: '#121212',
+  salmon: '#ffa7b5',
+  orange: '#fdae61'
 };
 
 /**
@@ -67,39 +67,42 @@ const randomArray = () => {
 let x = randomArray();
 let y = randomArray();
 
+// console.log(x)
+// console.log(y)
+
 /**
  * Data
  */
 const data = [
   {
-    type: "scatter",
-    mode: "markers",
+    type: 'scatter',
+    mode: 'markers',
     x: x,
     y: y,
-    xaxis: "x",
-    yaxis: "y",
-    name: "random data",
+    xaxis: 'x',
+    yaxis: 'y',
+    name: 'random data',
     marker: {
       color: colors.purple,
-      size: 10
+      size: 8
     }
   },
   {
-    type: "histogram",
+    type: 'histogram',
     x: x,
-    xaxis: "x2",
-    yaxis: "y2",
-    name: "x coord dist.",
+    xaxis: 'x2',
+    yaxis: 'y2',
+    name: 'x coord dist.',
     marker: {
       color: colors.salmon
     }
   },
   {
-    type: "histogram",
+    type: 'histogram',
     x: y,
-    xaxis: "x3",
-    yaxis: "y3",
-    name: "y coord dist.",
+    xaxis: 'x3',
+    yaxis: 'y3',
+    name: 'y coord dist.',
     marker: {
       color: colors.orange
     }
@@ -112,9 +115,11 @@ const data = [
  * hovermode: 'closest',
  */
 const layout = {
-  title: "Lasso around the scatter points to see sub-distributions",
+  title: 'Lasso around the scatter points to see sub-distributions',
   width: containerSize.width,
   height: containerSize.height,
+  dragmode: 'lasso',
+  hovermode: 'closest',
   xaxis: {
     zeroline: true
   },
@@ -123,22 +128,53 @@ const layout = {
   },
   xaxis2: {
     domain: [0, 0.45],
-    anchor: "y2"
+    anchor: 'y2'
   },
   yaxis2: {
     domain: [0, 0.45],
-    anchor: "x2"
+    anchor: 'x2'
   },
   xaxis3: {
     domain: [0.55, 1],
-    anchor: "y3"
+    anchor: 'y3'
   },
   yaxis3: {
     domain: [0, 0.45],
-    anchor: "x3"
+    anchor: 'x3'
   }
 };
 
 Plotly.newPlot(myPlot, data, layout);
 
-myPlot.on("plotly_selected", eventData => {});
+myPlot.on('plotly_selected', eventData => {
+
+  console.log(eventData)
+
+  let x = [],
+    y = [],
+    unselectedPoints = []
+
+  for (let i = 0; i < N; i++) {
+    unselectedPoints.push(colors.purple_light)
+  }
+
+
+  eventData.points.forEach(point => {
+    x.push(point.x)
+    y.push(point.y)
+    unselectedPoints[point.pointNumber] = colors.purple;
+  })
+
+  let newData = {
+    x: [x, y]
+  }
+
+  let traces = [1, 2]
+
+  Plotly.restyle(myPlot, newData, traces)
+
+  Plotly.restyle(myPlot, 'marker.color', [unselectedPoints], [0])
+
+});
+
+

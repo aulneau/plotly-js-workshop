@@ -4,19 +4,27 @@
 const data = [
   {
     language: 'javascript',
-    code: javascriptCode
+    code: javascriptCode,
+    traces: javascriptData,
+    layout: javascriptLayout
   },
   {
     language: 'r',
-    code: rCode
+    code: rCode,
+    traces: rData,
+    layout: rLayout
   },
   {
     language: 'python',
-    code: pythonCode
+    code: pythonCode,
+    traces: pythonData,
+    layout: pythonLayout
   },
   {
     language: 'react',
-    code: reactCode
+    code: reactCode,
+    traces: reactData,
+    layout: reactLayout
   }
 ]
 
@@ -60,6 +68,13 @@ const tabs = [jsTab, rTab, pythonTab, reactTab];
 const codeArea = document.querySelector('.js-code-area')
 
 
+const plotContainer = document.querySelector('.js-plot-container')
+
+let container = getSize(plotContainer)
+
+console.log(container)
+
+
 /**
  * Find our plot
  */
@@ -77,6 +92,14 @@ const setCodeBlock = () => {
   hljs.initHighlighting();
 }
 
+findDataObj = (data) => {
+ return data.find(plotData => plotData.language === state.activeLanguage)
+}
+
+const plotData = () => {
+  const plotData = findDataObj(data)
+  Plotly.newPlot(myPlot, plotData.traces, plotData.layout)
+}
 
 
 /**
@@ -96,9 +119,11 @@ tabs.forEach((tab) => {
 
     // add an active class to our tab
     tab.classList.add('active');
-
     // set codeblock
     setCodeBlock()
+    plotData()
+
+
   } else {
     tab.classList.remove('active')
   }
@@ -115,13 +140,15 @@ tabs.forEach((tab) => {
       // set codeblock
       setCodeBlock()
 
+      plotData()
+
+
     }
 
     /**
      * Go through them again on each click to check if active
      */
     tabs.forEach((tabB) => {
-
       if (state.activeLanguage === tabB.dataset.language) {
         tabB.classList.add('active')
       } else {
@@ -134,4 +161,10 @@ tabs.forEach((tab) => {
 hljs.initHighlightingOnLoad();
 
 
+window.onresize = () => {
+  container = getSize(plotContainer)
+  console.log(container)
+
+  Plotly.relayout(myPlot, {width: container.width, height: container.height})
+}
 

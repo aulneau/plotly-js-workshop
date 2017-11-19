@@ -4,6 +4,7 @@
 
 const myPlot = document.getElementById("myPlot");
 
+
 /**
  * Data
  * https://plot.ly/javascript/line-and-scatter/
@@ -27,8 +28,18 @@ const data = [
  */
 const layout = {
   title: "My simple plot",
-  width: 500,
-  height: 500
+  width: window.innerWidth,
+  height: window.innerHeight
 };
 
 Plotly.newPlot(myPlot, data, layout);
+
+window.onresize = () => {
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+
+  Plotly.relayout(myPlot, {
+    width,
+    height
+  })
+}

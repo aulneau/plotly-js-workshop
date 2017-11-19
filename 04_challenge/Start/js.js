@@ -55,7 +55,7 @@ const url = 'https://cdn.rawgit.com/plotly/datasets/aba35d71/mpg.csv';
 
 Plotly.d3.csv(url, (err, csv) => {
 
-  // console.log(csv);
+  console.log(csv);
 
   const mpg = csv.map(r => {
     return +r.mpg;
